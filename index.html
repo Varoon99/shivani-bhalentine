@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shivani ❤️ Will You Be My Valentine?</title>
+
+<style>
+/* ===== BODY ===== */
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family: Arial, sans-serif;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background: linear-gradient(135deg,#ff4d6d,#ff758f);
+  color:white;
+  text-align:center;
+}
+
+
+/* ===== CARD ===== */
+.card{
+  background: rgba(0,0,0,0.35);
+  padding:30px;
+  border-radius:20px;
+  width:340px;
+  position:relative;
+}
+
+
+/* ===== SLIDESHOW (FIXED + CENTERED PROPERLY) ===== */
+.slideshow{
+  width:100%;
+  height:300px;
+  border-radius:15px;
+  overflow:hidden;
+  margin-bottom:15px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:black;
+  position:relative;
+}
+
+/* image */
+.slide{
+  position:absolute;
+  top:0;
+  left:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:contain;   /* show full image */
+  opacity:0;
+
+  transition:opacity 1s ease;
+}
+
+.slide.active{
+  opacity:1;
+}
+
+
+/* ===== BUTTONS ===== */
+button{
+  padding:12px 22px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  margin:10px;
+}
+
+#yes{
+  background:#2ecc71;
+  color:white;
+}
+
+#no{
+  background:#e74c3c;
+  color:white;
+  position:absolute;
+}
+
+
+/* ===== HEARTS ===== */
+.heart{
+  position:absolute;
+  font-size:26px;
+  animation: floatUp 4s linear forwards;
+  pointer-events:none;
+}
+
+@keyframes floatUp{
+  from{ transform:translateY(0); }
+  to{ transform:translateY(-110vh); opacity:0; }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="card" id="card">
+
+  <!-- SLIDESHOW -->
+  <div class="slideshow">
+    <!-- ⚠️ MATCH YOUR FILE NAMES EXACTLY (.jpeg etc) -->
+    <img src="Pic1.jpeg" class="slide active">
+    <img src="Pic2.jpeg" class="slide">
+    <img src="Pic3.jpeg" class="slide">
+    <img src="Pic4.jpeg" class="slide">
+  </div>
+
+  <h1>Hey Shivani ❤️</h1>
+  <p>From my heart to yours…<br>Will you be my Valentine?</p>
+
+  <button id="yes">YES 😍</button>
+  <button id="no">NO 😈</button>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" src="music.mp3" loop></audio>
+
+
+<script>
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const music = document.getElementById("music");
+const card = document.getElementById("card");
+
+
+/* ===== HEARTS FLOATING ===== */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.innerHTML="❤️";
+  h.className="heart";
+  h.style.left=Math.random()*100+"vw";
+  h.style.bottom="-20px";
+  document.body.appendChild(h);
+
+  setTimeout(()=>h.remove(),4000);
+},150);
+
+
+/* ===== NO BUTTON RUN AWAY ===== */
+no.addEventListener("mouseover", ()=>{
+  no.style.left=Math.random()*(window.innerWidth-120)+"px";
+  no.style.top=Math.random()*(window.innerHeight-80)+"px";
+});
+
+
+/* ===== YES CLICK ===== */
+yes.addEventListener("click", ()=>{
+
+  music.play();
+
+  card.innerHTML =
+  "<h1 style='font-size:36px'>SHIVANI SAID YES ❤️</h1>\
+   <p>You just made me the happiest guy alive 🥹</p>";
+
+  confetti();
+});
+
+
+/* ===== CONFETTI ===== */
+function confetti(){
+  for(let i=0;i<150;i++){
+    const c=document.createElement("div");
+
+    c.style.position="absolute";
+    c.style.width="8px";
+    c.style.height="8px";
+    c.style.background="white";
+    c.style.left=Math.random()*100+"vw";
+    c.style.top="-10px";
+
+    document.body.appendChild(c);
+
+    c.animate(
+      [{transform:"translateY(0)"},{transform:"translateY(120vh)"}],
+      {duration:2000}
+    );
+  }
+}
+
+
+/* ===== SLIDESHOW LOGIC ===== */
+const slides=document.querySelectorAll(".slide");
+let index=0;
+
+setInterval(()=>{
+  slides[index].classList.remove("active");
+  index=(index+1)%slides.length;
+  slides[index].classList.add("active");
+},2500);
+</script>
+
+</body>
+</html>
